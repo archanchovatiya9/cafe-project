@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tuxedo Cat Coffee</title>
+    <link type="text/css" rel="stylesheet" href="cafe.css" />
+    <li><a href="about.html">About</a></li>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#menu img").each(function () {
+          var src = $(this).attr("src");
+          var rolloverSrc = $(this).attr("id");
+          $("<img>").attr("src", rolloverSrc);
+          $("#place_order").click(function () {
+            window.location.href = "checkout.html";
+          });
+        });
+
+        $("#menu img").hover(
+          function () {
+            var rolloverSrc = $(this).attr("id");
+            $(this).attr("src", rolloverSrc);
+          },
+          function () {
+            var originalSrc = $(this).attr("src").replace("_info", "");
+            $(this).attr("src", originalSrc);
+          }
+        );
+
+        var total = 0;
+        $("#menu img").click(function () {
+          var description = $(this).attr("alt");
+          var price = parseFloat($(this).data("price"));
+          total += price;
+
+          $("#order").append(
+            "<option>" + description + " - $" + price.toFixed(2) + "</option>"
+          );
+          $("#total").text("Total: $" + total.toFixed(2));
+        });
+
+        $(document).ready(function () {
+          // Existing JavaScript code
+
+          var total = 0;
+
+          $("#menu img").click(function () {
+            var description = $(this).attr("alt");
+            var price = parseFloat($(this).data("price"));
+            total += price;
+
+            $("#order").append(
+              "<option>" + description + " - $" + price.toFixed(2) + "</option>"
+            );
+            $("#total")
+              .text("Total: $" + total.toFixed(2))
+              .addClass("highlight"); // Add the "highlight" class to the total
+          });
+
+          $("#clear_order").click(function () {
+            $("#order").empty();
+            total = 0;
+            $("#total").text("").removeClass("highlight"); // Remove the "highlight" class from the total
+          });
+        });
+
+        $("#clear_order").click(function () {
+          $("#order").empty();
+          total = 0;
+          $("#total").text("");
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <img src="images/logo.png" alt="Tuxedo Cat Coffee" />
+    </header>
+    <main>
+      <form
+        id="order_form"
+        name="order_form"
+        action="checkout.html"
+        method="get"
+      >
+        <section id="menu">
+          <h2>Menu</h2>
+          <p>Click an item to add it to your order.</p>
+          <ul>
+            <li>
+              <a href="#"
+                ><img
+                  id="images/espresso_info.jpg"
+                  src="images/espresso.jpg"
+                  alt="Espresso"
+                  data-price="2.50"
+              /></a>
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  id="images/latte_info.jpg"
+                  src="images/latte.jpg"
+                  alt="Latte"
+                  data-price="3.50"
+              /></a>
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  id="images/cappuccino_info.jpg"
+                  src="images/cappuccino.jpg"
+                  alt="Cappuccino"
+                  data-price="3.00"
+              /></a>
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  id="images/coffee_info.jpg"
+                  src="images/coffee.jpg"
+                  alt="Coffee"
+                  data-price="2.00"
+              /></a>
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  id="images/biscotti_info.jpg"
+                  src="images/biscotti.jpg"
+                  alt="Biscotti"
+                  data-price="1.50"
+              /></a>
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  id="images/scone_info.jpg"
+                  src="images/scone.jpg"
+                  alt="Scone"
+                  data-price="2.00"
+              /></a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Your Order</h2>
+          <select id="order" name="order" size="6"></select>
+          <p id="total">&nbsp;</p>
+          <section id="buttons">
+            <input
+              type="button"
+              name="place_order"
+              id="place_order"
+              value="Place Order"
+            />
+            <input
+              type="button"
+              name="clear_order"
+              id="clear_order"
+              value="Clear Order"
+            />
+          </section>
+        </section>
+      </form>
+    </main>
+  </body>
+</html>
